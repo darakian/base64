@@ -1,8 +1,8 @@
 # base64.c
 Provides
-'''c 
+```c
 int base64_encode(char* input_buffer, int input_length, char* output_buffer, int output_buffer_length)
-'''
+```
 #License
 The MIT License (MIT)
 
