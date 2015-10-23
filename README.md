@@ -1,8 +1,13 @@
 # base64.c
 Provides
 ```c
-int base64_encode(char* input_buffer, int input_length, char* output_buffer, int output_buffer_length)
+int base64_default_encode(char* input_buffer, int input_length, char* output_buffer, int output_buffer_length)
 ```
+and
+```c
+int base64_encode(char* input_buffer, int input_length, char* output_buffer, int output_buffer_length, char * lookup_string, int lookup_string_length);
+```
+The former will encode the string with the basic base64 encode string and the later allows the programmer to define their own encode string.
 #License
 The MIT License (MIT)
 
