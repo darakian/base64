@@ -33,21 +33,29 @@ The input variable 'input_length' is the length of the input buffer in bytes
 Return value is output_buffer_length on sucess and -1 on failure.
 The reason for having output_buffer_length as both an input and an output is twofold
 1) it allows for two different styles of programming
-2) it allows for error checking 
+2) it allows for error checking
 
 Author's Note:
 This process could (and maybe should) be refered to as 'arming ascii' as base64 encoding is also know as ascii armor
 See https://tools.ietf.org/html/rfc4880 for more information about 'ascii armor' and possibly other ascii weaponization techniques
 */
+#include <string.h>
 
-int base64_encode(char* input_buffer, int input_length, char* output_buffer, int output_buffer_length)
+int base64_encode(char* input_buffer, int input_length, char* output_buffer, int output_buffer_length, char * lookup_string, int lookup_string_length)
 {
   if (output_buffer_length<(((input_length*4)/3) + 3))
   {
     return -1;
   }
   //See https://en.wikipedia.org/wiki/Base64 for an explination on the lookup table
-  char * base64_lookup = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  char base64_lookup[65] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+  //Validate lookup_string and use it.
+  if (lookup_string_length==64)
+  {
+    strcpy(base64_lookup, lookup_string);
+  }
+
   int length_remainder = input_length%3;
   int i, index = 0;
   int character1, character2, character3 = 0;
@@ -93,3 +101,9 @@ int base64_encode(char* input_buffer, int input_length, char* output_buffer, int
   output_buffer_length = index;
   return index;
 }
+
+int base64_default_encode(char* input_buffer, int input_length, char* output_buffer, int output_buffer_length)
+{
+  base64_encode(input_buffer, input_length, output_buffer, output_buffer_length, NULL, 0);
+}
+
