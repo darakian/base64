@@ -107,3 +107,4 @@ int base64_default_encode(char* input_buffer, int input_length, char* output_buf
   base64_encode(input_buffer, input_length, output_buffer, output_buffer_length, NULL, 0);
 }
 
+
